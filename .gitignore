@@ -41,8 +41,18 @@ data/
 # === Environment ===
 .env
 
-# === Slide e presentazione (solo locale) ===
-slides/
+# === Slide LaTeX build artifacts ===
+slides/*.aux
+slides/*.bbl
+slides/*.blg
+slides/*.log
+slides/*.nav
+slides/*.out
+slides/*.snm
+slides/*.toc
+slides/*.pdf
+slides/*.synctex.gz
+slides/main_backup.tex
 
 # === Jupyter ===
 .ipynb_checkpoints/
