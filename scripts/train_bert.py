@@ -14,7 +14,7 @@ import logging
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from amelia_experiment.config import DEFAULT_MAX_LENGTH, DEFAULT_SEED
 from amelia_experiment.dataset import load_amelia

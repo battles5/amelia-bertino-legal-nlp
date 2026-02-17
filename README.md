@@ -1,19 +1,19 @@
 # AMELIA + BERTino — Legal Argument Mining
 
-Progetto d'esame per il corso di **Text Mining & NLP** (Università di Firenze, A.A. 2025–2026).
+Exam project for the **Text Mining & NLP** course (University of Florence, A.Y. 2025–2026).
 
-Classificazione binaria di componenti argomentative — **premessa** (`prem`) vs **conclusione** (`conc`) — su decisioni italiane in materia di IVA, usando il dataset [AMELIA](https://huggingface.co/datasets/nlp-unibo/AMELIA) e il modello transformer [BERTino](https://huggingface.co/indigo-ai/BERTino).
+Binary classification of argumentative components — **premise** (`prem`) vs **conclusion** (`conc`) — on Italian VAT tax-court decisions, using the [AMELIA](https://huggingface.co/datasets/nlp-unibo/AMELIA) dataset and the [BERTino](https://huggingface.co/indigo-ai/BERTino) transformer model.
 
 ---
 
-## Risultati
+## Results
 
-| Modello | Validation Macro‑F1 | Test Macro‑F1 | Test Accuracy |
-|---------|:-------------------:|:-------------:|:-------------:|
+| Model | Val Macro‑F1 | Test Macro‑F1 | Test Accuracy |
+|-------|:-------------------:|:-------------:|:-------------:|
 | TF‑IDF + Logistic Regression | 0.7647 | 0.7484 | 91.75 % |
 | **BERTino (fine‑tuned)** | **0.9065** | **0.9221** | **96.46 %** |
 
-Il fine‑tuning di BERTino migliora la Macro‑F1 di **+17.4 punti** rispetto alla baseline, confermando che la rappresentazione contestuale del transformer cattura segnali semantici e sintattici che il modello bag‑of‑words non coglie.
+Fine-tuning BERTino improves Macro-F1 by **+17.4 points** over the baseline, confirming that contextual transformer representations capture semantic and syntactic signals that a bag-of-words model misses.
 
 ### Confusion matrix (test set)
 
@@ -22,102 +22,98 @@ Il fine‑tuning di BERTino migliora la Macro‑F1 di **+17.4 punti** rispetto a
 | **Gold prem** | 506 | 10 |
 | **Gold conc** | 11 | 67 |
 
-*(BERTino — 21 errori su 594 esempi)*
+*(BERTino — 21 errors out of 594 samples)*
 
 ---
 
-## Metodologia
+## Methodology
 
 ### 1. Dataset — AMELIA
 
-AMELIA (*Argument Mining in dEcisioni su IVA*) è un corpus annotato di componenti argomentative estratte da decisioni italiane della Commissione Tributaria in materia di IVA (Lippi et al., 2023). Contiene 3 311 istanze suddivise in split ufficiali:
+AMELIA (*Argument Mining Evaluation on Legal documents in ItAlian*) is an annotated corpus of argumentative components extracted from Italian Tax Court decisions on VAT disputes (Lippi et al., 2023). It contains 3 311 instances split into official partitions:
 
-| Split | Esempi |
+| Split | Samples |
 |-------|-------:|
 | Train | 2 108 |
 | Validation | 609 |
 | Test | 594 |
 
-Ogni istanza è un segmento testuale annotato come `prem` (premessa) o `conc` (conclusione). La distribuzione è sbilanciata (~80 % premesse).
+Each instance is a text segment labeled as `prem` (premise) or `conc` (conclusion). The distribution is imbalanced (~80 % premises).
 
 ### 2. Baseline — TF‑IDF + Logistic Regression
 
-Pipeline scikit‑learn:
-1. **Preprocessing:** normalizzazione whitespace, lowercasing
-2. **Vettorizzazione:** TF‑IDF con unigrammi e bigrammi, max 50 000 feature
-3. **Classificatore:** Logistic Regression (solver `lbfgs`, max 1 000 iterazioni, seed 42)
+scikit-learn pipeline:
+1. **Preprocessing:** whitespace normalization, lowercasing
+2. **Vectorization:** TF-IDF with unigrams and bigrams, max 50 000 features
+3. **Classifier:** Logistic Regression (solver `lbfgs`, max 1 000 iterations, seed 42)
 
-### 3. Modello — BERTino (fine‑tuning)
+### 3. Model — BERTino (fine-tuning)
 
-[BERTino](https://huggingface.co/indigo-ai/BERTino) è un DistilBERT pre‑addestrato su un corpus italiano (Muffo et al., 2022). Configurazione fine‑tuning:
+[BERTino](https://huggingface.co/indigo-ai/BERTino) is a DistilBERT pre-trained on Italian corpora (Muffo et al., 2022). Fine-tuning configuration:
 
-| Iperparametro | Valore |
+| Hyperparameter | Value |
 |---------------|--------|
-| Epoche | 3 |
+| Epochs | 3 |
 | Batch size (train) | 16 |
 | Batch size (eval) | 32 |
 | Learning rate | 2 × 10⁻⁵ |
 | Weight decay | 0.01 |
-| Warmup | 10 % degli step |
-| Max length | 256 token |
-| Metrica di selezione | Macro‑F1 |
+| Warmup | 10 % of steps |
+| Max length | 256 tokens |
+| Selection metric | Macro‑F1 |
 | Seed | 42 |
 
-Hardware: NVIDIA RTX 2000 Ada (8 GB VRAM). Tempo di training: ~4 minuti.
+Hardware: NVIDIA RTX 2000 Ada (8 GB VRAM). Training time: ~4 minutes.
 
-### 4. Metrica
+### 4. Metric
 
-**Macro‑F1** — media aritmetica delle F1 per ciascuna classe. Scelta perché robusta allo sbilanciamento: penalizza modelli che ignorano la classe minoritaria (`conc`).
+**Macro-F1** — arithmetic mean of per-class F1 scores. Chosen for robustness to class imbalance: it penalizes models that ignore the minority class (`conc`).
 
 ---
 
 ## Quick start
 
 ```bash
-# Clona ed entra
+# Clone and enter
 git clone https://github.com/battles5/amelia-bertino-legal-nlp.git
 cd amelia-bertino-legal-nlp
 
-# Crea virtualenv e installa
+# Create virtualenv and install
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1        # Windows PowerShell
 pip install -r requirements.txt
 
-# Smoke test
-python scripts/smoke_test.py
 ```
 
-### Comandi principali
+### Main commands
 
 ```bash
-python train_baseline.py            # Baseline TF-IDF + LR (~1 min, CPU)
-python train_bert.py                # Fine-tuning BERTino (~4 min, GPU)
-python eval.py                      # Valutazione + plot + tabelle
-python demo.py --model bertino      # Demo su 5 esempi dal test set
+python scripts/train_baseline.py     # Baseline TF-IDF + LR (~1 min, CPU)
+python scripts/train_bert.py         # Fine-tuning BERTino (~4 min, GPU)
+python scripts/eval.py               # Evaluation + plots + tables
 ```
 
 ---
 
-## Struttura del progetto
+## Project structure
 
 ```
 amelia-bertino-legal-nlp/
-├── src/amelia_experiment/      # Moduli Python riusabili
-│   ├── config.py               # Costanti e path
-│   ├── dataset.py              # Caricamento AMELIA da HF
-│   ├── preprocess.py           # Normalizzazione testo e label
-│   ├── metrics.py              # Macro-F1 e classification report
+├── src/amelia_experiment/      # Reusable Python modules
+│   ├── config.py               # Constants and paths
+│   ├── dataset.py              # AMELIA loading from HF
+│   ├── preprocess.py           # Text and label normalization
+│   ├── metrics.py              # Macro-F1 and classification report
 │   ├── baseline.py             # TF-IDF + LR
-│   ├── bertino.py              # Fine-tuning e inferenza BERTino
-│   ├── artifacts.py            # Salvataggio JSON/CSV/tabelle
+│   ├── bertino.py              # BERTino fine-tuning and inference
+│   ├── artifacts.py            # JSON/CSV/table export
 │   └── plotting.py             # Confusion matrix
-├── tests/                      # Unit test (pytest)
-├── scripts/smoke_test.py       # Smoke test per CI
-├── train_baseline.py           # CLI: training baseline
-├── train_bert.py               # CLI: fine-tuning BERTino
-├── eval.py                     # CLI: valutazione e report
-├── demo.py                     # CLI: demo interattiva
-├── .github/workflows/ci.yml    # CI GitHub Actions
+├── scripts/                    # CLI entry points
+│   ├── train_baseline.py       # Baseline training
+│   ├── train_bert.py           # BERTino fine-tuning
+│   └── eval.py                 # Evaluation and reporting
+├── tests/                      # Unit tests (pytest)
+├── .github/workflows/ci.yml    # CI via GitHub Actions
 ├── requirements.txt
 ├── pyproject.toml
 └── README.md
@@ -125,25 +121,25 @@ amelia-bertino-legal-nlp/
 
 ---
 
-## Riproducibilità
+## Reproducibility
 
-- **Seed fisso:** 42 (Python, NumPy, PyTorch)
-- **Split ufficiali:** AMELIA usa split predefiniti su Hugging Face
-- **Artefatti versionabili:** metriche JSON/CSV e confusion matrix in `results/`
-- **CI:** ruff (lint + format) + pytest su ogni push via GitHub Actions
+- **Fixed seed:** 42 (Python, NumPy, PyTorch)
+- **Official splits:** AMELIA uses predefined splits on Hugging Face
+- **Versionable artifacts:** JSON/CSV metrics and confusion matrices in `results/`
+- **CI:** ruff (lint + format) + pytest on every push via GitHub Actions
 
 ---
 
-## Licenze
+## Licenses
 
-| Risorsa | Licenza | Link |
+| Resource | License | Link |
 |---------|---------|------|
 | AMELIA | CC BY 4.0 | [HF datasets](https://huggingface.co/datasets/nlp-unibo/AMELIA) |
 | BERTino | MIT | [HF models](https://huggingface.co/indigo-ai/BERTino) |
 
 ---
 
-## Riferimenti
+## References
 
 - Lippi, M., Lagioia, F., Contissa, G., Sartor, G., & Torroni, P. (2023). *AMELIA: A dataset for argument mining in decisions on Italian VAT*. In Proceedings of the Workshop on Computational Approaches to Argument Mining. [nlp-unibo/AMELIA](https://huggingface.co/datasets/nlp-unibo/AMELIA)
 
@@ -157,12 +153,11 @@ amelia-bertino-legal-nlp/
 
 ---
 
-## Sviluppo
+## Development
 
 ```bash
 ruff check .              # Lint
 ruff format .             # Format
 pytest                    # Test
-python scripts/smoke_test.py  # Smoke test
 ```
 
