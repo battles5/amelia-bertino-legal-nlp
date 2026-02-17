@@ -1,7 +1,7 @@
 [project]
 name = "amelia-bertino-legal-nlp"
 version = "0.1.0"
-description = "Esperimento di classificazione argomentativa (prem vs conc) su testi legali italiani – dataset AMELIA + BERTino"
+description = "Legal argument mining (premise vs conclusion) on Italian VAT decisions — AMELIA dataset + BERTino fine-tuning"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 

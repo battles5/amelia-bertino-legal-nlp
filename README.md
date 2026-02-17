@@ -1,6 +1,6 @@
 # AMELIA + BERTino — Legal Argument Mining
 
-Exam project for the **Text Mining & NLP** course (University of Florence, A.Y. 2025–2026).
+Exam project for the **Text Mining & NLP** module — Master in Data Science and Statistical Learning ([MD2SL](https://www.md2sl.unifi.it/)), University of Florence, A.Y. 2025–2026.
 
 Binary classification of argumentative components — **premise** (`prem`) vs **conclusion** (`conc`) — on Italian VAT tax-court decisions, using the [AMELIA](https://huggingface.co/datasets/nlp-unibo/AMELIA) dataset and the [BERTino](https://huggingface.co/indigo-ai/BERTino) transformer model.
 
@@ -30,7 +30,7 @@ Fine-tuning BERTino improves Macro-F1 by **+17.4 points** over the baseline, con
 
 ### 1. Dataset — AMELIA
 
-AMELIA (*Argument Mining Evaluation on Legal documents in ItAlian*) is an annotated corpus of argumentative components extracted from Italian Tax Court decisions on VAT disputes (Lippi et al., 2023). It contains 3 311 instances split into official partitions:
+AMELIA (*Argument Mining Evaluation on Legal documents in ItAlian*) is an annotated corpus of argumentative components extracted from Italian Tax Court decisions on VAT disputes. It contains 3 311 instances split into official partitions:
 
 | Split | Samples |
 |-------|-------:|
@@ -49,7 +49,7 @@ scikit-learn pipeline:
 
 ### 3. Model — BERTino (fine-tuning)
 
-[BERTino](https://huggingface.co/indigo-ai/BERTino) is a DistilBERT pre-trained on Italian corpora (Muffo et al., 2022). Fine-tuning configuration:
+[BERTino](https://huggingface.co/indigo-ai/BERTino) is a DistilBERT pre-trained on Italian corpora. Fine-tuning configuration:
 
 | Hyperparameter | Value |
 |---------------|--------|
@@ -141,15 +141,15 @@ amelia-bertino-legal-nlp/
 
 ## References
 
-- Lippi, M., Lagioia, F., Contissa, G., Sartor, G., & Torroni, P. (2023). *AMELIA: A dataset for argument mining in decisions on Italian VAT*. In Proceedings of the Workshop on Computational Approaches to Argument Mining. [nlp-unibo/AMELIA](https://huggingface.co/datasets/nlp-unibo/AMELIA)
+- *AMELIA: A dataset for argument mining in decisions on Italian VAT* (2023). In Proceedings of the Workshop on Computational Approaches to Argument Mining. [nlp-unibo/AMELIA](https://huggingface.co/datasets/nlp-unibo/AMELIA)
 
-- Muffo, M., Ferrario, A., & Kluzer, S. (2022). *BERTino: An Italian DistilBERT model*. [indigo-ai/BERTino](https://huggingface.co/indigo-ai/BERTino)
+- *BERTino: An Italian DistilBERT model* (2022). [indigo-ai/BERTino](https://huggingface.co/indigo-ai/BERTino)
 
-- Devlin, J., Chang, M.-W., Lee, K., & Toutanova, K. (2019). *BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding*. In Proceedings of NAACL-HLT 2019.
+- *BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding* (2019). In Proceedings of NAACL-HLT 2019.
 
-- Sanh, V., Debut, L., Chaumond, J., & Wolf, T. (2019). *DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter*. arXiv:1910.01108.
+- *DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter* (2019). arXiv:1910.01108.
 
-- Pedregosa, F., et al. (2011). *Scikit-learn: Machine Learning in Python*. Journal of Machine Learning Research, 12, 2825–2830.
+- *Scikit-learn: Machine Learning in Python* (2011). Journal of Machine Learning Research, 12, 2825–2830.
 
 ---
 
