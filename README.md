@@ -24,6 +24,28 @@ Fine-tuning BERTino improves Macro-F1 by **+17.4 points** over the baseline, con
 
 *(BERTino — 21 errors out of 594 samples)*
 
+### Ablation study (baseline TF-IDF + LR)
+
+| n-gram range | max features | Test Macro-F1 |
+|:---:|:---:|:---:|
+| (1, 1) | 10 000 | **0.763** |
+| (1, 2) | 10 000 | 0.748 |
+| (1, 3) | 10 000 | 0.756 |
+| (2, 2) | 10 000 | 0.603 |
+
+Best baseline (unigrams only) still lags BERTino by **15.9 pp**.
+
+### Error analysis
+
+- **21 errors**: 10 FP (prem → conc, avg confidence 0.797) and 11 FN (conc → prem, avg confidence 0.907)
+- Errors concentrate on **short texts** (avg 25.9 words vs 47.5 for correct predictions)
+- BERTino corrects **38/49** baseline errors but introduces 10 new ones
+- FN errors are more confident than FP errors → structurally ambiguous sentences
+
+### Training dynamics
+
+Validation Macro-F1 across epochs: 0.878 → 0.902 → **0.907**. No overfitting observed (eval loss stable at ~0.13).
+
 ---
 
 ## Methodology
@@ -38,7 +60,7 @@ AMELIA (*Argument Mining Evaluation on Legal documents in ItAlian*) is an annota
 | Validation | 609 |
 | Test | 594 |
 
-Each instance is a text segment labeled as `prem` (premise) or `conc` (conclusion). The distribution is imbalanced (~80 % premises).
+Each instance is a text segment labeled as `prem` (premise) or `conc` (conclusion). The distribution is heavily imbalanced (~87 % premises, ~13 % conclusions — ratio ~7:1).
 
 ### 2. Baseline — TF‑IDF + Logistic Regression
 
@@ -96,6 +118,16 @@ python scripts/eval.py               # Evaluation + plots + tables
 
 ---
 
+## EDA highlights
+
+- **Class imbalance**: ~87 % premesse / ~13 % conclusioni (ratio ~7:1) across all splits
+- **Text length**: premises average 52.3 words (358 chars), conclusions average 17.1 words (121 chars)
+- **Tokenization**: mean 70 WordPiece tokens; only **1.2 %** of samples truncated at `max_length=256`
+- **Discriminative terms**: conclusions feature domain-specific terms (*"appello"*, *"fondato"*, *"infondato"*, *"respinto"*, *"pertanto"*); premises dominated by generic function words
+- **Lexical overlap**: 7.3 % between premise and conclusion vocabularies → BoW approaches limited, contextual representations needed
+
+---
+
 ## Project structure
 
 ```
@@ -105,17 +137,22 @@ amelia-bertino-legal-nlp/
 │   ├── dataset.py              # AMELIA loading from HF
 │   ├── preprocess.py           # Text and label normalization
 │   ├── metrics.py              # Macro-F1 and classification report
-│   ├── baseline.py             # TF-IDF + LR
-│   ├── bertino.py              # BERTino fine-tuning and inference
-│   ├── artifacts.py            # JSON/CSV/table export
-│   └── plotting.py             # Confusion matrix
+│   ├── baseline.py             # TF-IDF + LR pipeline
+│   ├── bertino.py              # BERTino fine-tuning and batch inference
+│   ├── artifacts.py            # JSON/CSV/LaTeX table export
+│   ├── plotting.py             # Confusion matrix
+│   └── logging_utils.py        # Logging configuration
 ├── notebooks/                  # Exploratory analysis
-│   ├── 01_eda.ipynb            # Exploratory Data Analysis
-│   └── 02_error_analysis.ipynb # Error analysis & ablation study
+│   ├── 01_eda.ipynb            # EDA: class dist., text length, tokens, TF-IDF, word clouds
+│   └── 02_error_analysis.ipynb # Error analysis, confidence, ablation, training dynamics
 ├── scripts/                    # CLI entry points
 │   ├── train_baseline.py       # Baseline training
 │   ├── train_bert.py           # BERTino fine-tuning
 │   └── eval.py                 # Evaluation and reporting
+├── results/                    # Generated artifacts (gitignored)
+│   ├── metrics/                # JSON + CSV metrics + training history
+│   ├── plots/                  # 14 publication-ready plots
+│   └── tables/                 # LaTeX results table
 ├── tests/                      # Unit tests (pytest, 39 tests)
 ├── .github/workflows/ci.yml    # CI via GitHub Actions
 ├── requirements.txt
