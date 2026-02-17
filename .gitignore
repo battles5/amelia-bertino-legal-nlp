@@ -49,6 +49,7 @@ data/
 .env
 
 # === Slide LaTeX build artifacts ===
+slides/
 slides/*.aux
 slides/*.bbl
 slides/*.blg
