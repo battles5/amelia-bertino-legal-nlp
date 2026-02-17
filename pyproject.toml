@@ -1,0 +1,24 @@
+[project]
+name = "amelia-bertino-legal-nlp"
+version = "0.1.0"
+description = "Esperimento di classificazione argomentativa (prem vs conc) su testi legali italiani – dataset AMELIA + BERTino"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+fix = true
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["amelia_experiment"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"

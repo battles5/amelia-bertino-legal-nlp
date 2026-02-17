@@ -1,0 +1,58 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Train Baseline",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/amelia-bertino-legal-nlp/train_baseline.py",
+      "args": ["--algo", "tfidf_lr"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/amelia-bertino-legal-nlp"
+    },
+    {
+      "name": "Train BERTino",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/amelia-bertino-legal-nlp/train_bert.py",
+      "args": ["--num_train_epochs", "1", "--max_train_samples", "100", "--max_eval_samples", "50"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/amelia-bertino-legal-nlp"
+    },
+    {
+      "name": "Eval",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/amelia-bertino-legal-nlp/eval.py",
+      "args": ["--models", "baseline", "bertino", "--splits", "validation", "test"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/amelia-bertino-legal-nlp"
+    },
+    {
+      "name": "Demo Baseline",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/amelia-bertino-legal-nlp/demo.py",
+      "args": ["--model", "baseline"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/amelia-bertino-legal-nlp"
+    },
+    {
+      "name": "Demo BERTino",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/amelia-bertino-legal-nlp/demo.py",
+      "args": ["--model", "bertino"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/amelia-bertino-legal-nlp"
+    },
+    {
+      "name": "Smoke Test",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/amelia-bertino-legal-nlp/scripts/smoke_test.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/amelia-bertino-legal-nlp"
+    }
+  ]
+}
