@@ -1,7 +1,0 @@
-# <tipo>: <titolo breve> (max 50 char)
-#
-# Tipi: feat | fix | docs | exp | refactor | test | ci | style
-#
-# Corpo (opzionale, max 72 char per riga):
-# - Cosa cambia e perché
-# - Riferimenti a issue: Closes #XXX

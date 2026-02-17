@@ -13,11 +13,18 @@ build/
 venv/
 ENV/
 
-# === IDE ===
+# === IDE / editor ===
 .idea/
+.vscode/
 *.swp
 *.swo
 *~
+
+# === CI / hooks / config non essenziali ===
+.github/
+.pre-commit-config.yaml
+.gitmessage
+.env.example
 
 # === OS ===
 .DS_Store
