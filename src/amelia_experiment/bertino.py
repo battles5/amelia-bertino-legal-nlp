@@ -222,6 +222,14 @@ def finetune_bertino(
     save_dict_json(val_metrics, RESULTS_METRICS_DIR / "bertino_validation.json")
     save_metrics_csv(val_metrics, RESULTS_METRICS_DIR / "bertino_validation.csv")
 
+    # Salva la training history per analisi delle dinamiche di training
+    if hasattr(trainer.state, "log_history") and trainer.state.log_history:
+        save_dict_json(
+            {"log_history": trainer.state.log_history},
+            RESULTS_METRICS_DIR / "bertino_training_history.json",
+        )
+        logger.info("Training history salvata (%d entries).", len(trainer.state.log_history))
+
     return {
         "model": model,
         "tokenizer": tokenizer,
@@ -258,8 +266,9 @@ def predict_texts(
     tokenizer=None,
     model_dir: Path | None = None,
     max_length: int = DEFAULT_MAX_LENGTH,
+    batch_size: int = 32,
 ) -> list[dict]:
-    """Predice label e probabilità per una lista di testi.
+    """Predice label e probabilità per una lista di testi (batch).
 
     Args:
         texts: lista di stringhe.
@@ -267,6 +276,7 @@ def predict_texts(
         tokenizer: tokenizer HF (opzionale).
         model_dir: directory del checkpoint (usata se model/tokenizer non forniti).
         max_length: lunghezza massima token.
+        batch_size: dimensione del batch per l'inferenza.
 
     Returns:
         Lista di dizionari con ``label``, ``label_id``, ``confidence``.
@@ -277,9 +287,10 @@ def predict_texts(
     device = next(model.parameters()).device
     results = []
 
-    for text in texts:
+    for i in range(0, len(texts), batch_size):
+        batch_texts = texts[i : i + batch_size]
         inputs = tokenizer(
-            text,
+            batch_texts,
             return_tensors="pt",
             padding=True,
             truncation=True,
@@ -289,15 +300,17 @@ def predict_texts(
         with torch.no_grad():
             outputs = model(**inputs)
             probs = torch.softmax(outputs.logits, dim=-1)
-            pred_id = int(torch.argmax(probs, dim=-1).item())
-            confidence = float(probs[0, pred_id].item())
+            pred_ids = torch.argmax(probs, dim=-1)
 
-        results.append(
-            {
-                "label": ID2LABEL[pred_id],
-                "label_id": pred_id,
-                "confidence": confidence,
-            }
-        )
+        for j in range(len(batch_texts)):
+            pid = int(pred_ids[j].item())
+            conf = float(probs[j, pid].item())
+            results.append(
+                {
+                    "label": ID2LABEL[pid],
+                    "label_id": pid,
+                    "confidence": conf,
+                }
+            )
 
     return results

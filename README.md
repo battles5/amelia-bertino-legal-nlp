@@ -82,6 +82,7 @@ cd amelia-bertino-legal-nlp
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1        # Windows PowerShell
 pip install -r requirements.txt
+pip install -e .                     # Install package in editable mode
 
 ```
 
@@ -108,11 +109,14 @@ amelia-bertino-legal-nlp/
 │   ├── bertino.py              # BERTino fine-tuning and inference
 │   ├── artifacts.py            # JSON/CSV/table export
 │   └── plotting.py             # Confusion matrix
+├── notebooks/                  # Exploratory analysis
+│   ├── 01_eda.ipynb            # Exploratory Data Analysis
+│   └── 02_error_analysis.ipynb # Error analysis & ablation study
 ├── scripts/                    # CLI entry points
 │   ├── train_baseline.py       # Baseline training
 │   ├── train_bert.py           # BERTino fine-tuning
 │   └── eval.py                 # Evaluation and reporting
-├── tests/                      # Unit tests (pytest)
+├── tests/                      # Unit tests (pytest, 39 tests)
 ├── .github/workflows/ci.yml    # CI via GitHub Actions
 ├── requirements.txt
 ├── pyproject.toml

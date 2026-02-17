@@ -17,10 +17,6 @@ from __future__ import annotations
 
 import argparse
 import logging
-import sys
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from amelia_experiment.artifacts import (
     generate_results_table_latex,
@@ -53,7 +49,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--models",
         nargs="+",
-        choices=["baseline", "bertino", "fasttext"],
+        choices=["baseline", "bertino"],
         default=["baseline", "bertino"],
         help="Modelli da valutare.",
     )
@@ -116,36 +112,9 @@ def evaluate_bertino(ds, split_name: str) -> dict:
     return metrics
 
 
-def evaluate_fasttext(ds, split_name: str) -> dict:
-    """Valuta il modello fastText su uno split."""
-    from amelia_experiment.fasttext_model import load_fasttext_model
-
-    model = load_fasttext_model()
-    texts = [normalize_text(t) for t in ds[TEXT_COL]]
-    labels = [encode_label(lab) for lab in ds[LABEL_COL]]
-
-    preds = []
-    for text in texts:
-        pred_labels, _ = model.predict(text.replace("\n", " "))
-        pred_str = pred_labels[0].replace("__label__", "")
-        preds.append(encode_label(pred_str))
-
-    metrics = classification_dict(labels, preds)
-    logger.info("fastText — %s — Macro-F1: %.4f", split_name, metrics["macro_f1"])
-
-    RESULTS_METRICS_DIR.mkdir(parents=True, exist_ok=True)
-    save_dict_json(metrics, RESULTS_METRICS_DIR / f"fasttext_{split_name}.json")
-    save_metrics_csv(metrics, RESULTS_METRICS_DIR / f"fasttext_{split_name}.csv")
-
-    plot_confusion_matrix(metrics["confusion_matrix"], "fasttext", split_name)
-
-    return metrics
-
-
 EVALUATORS = {
     "baseline": evaluate_baseline,
     "bertino": evaluate_bertino,
-    "fasttext": evaluate_fasttext,
 }
 
 
@@ -173,9 +142,6 @@ def main() -> None:
                 and not (MODELS_DIR / "bertino_finetuned" / "final").exists()
             ):
                 logger.warning("Modello BERTino non trovato, skip.")
-                continue
-            if model_name == "fasttext" and not (MODELS_DIR / "fasttext.bin").exists():
-                logger.warning("Modello fastText non trovato, skip.")
                 continue
 
             ds = load_amelia(split=split_name, seed=args.seed)

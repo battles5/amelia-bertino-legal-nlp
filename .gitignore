@@ -46,7 +46,6 @@ slides/
 
 # === Jupyter ===
 .ipynb_checkpoints/
-notebooks/
 
 # === Ruff / linter cache ===
 .ruff_cache/

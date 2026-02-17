@@ -11,12 +11,6 @@ from __future__ import annotations
 
 import argparse
 import logging
-import sys
-
-# Aggiungi src/ al path per import dei moduli
-from pathlib import Path
-
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from amelia_experiment.config import DEFAULT_SEED
 from amelia_experiment.dataset import load_amelia
@@ -33,9 +27,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--algo",
-        choices=["tfidf_lr", "fasttext"],
+        choices=["tfidf_lr"],
         default="tfidf_lr",
-        help="Algoritmo da usare: tfidf_lr (default) oppure fasttext (opzionale).",
+        help="Algoritmo da usare: tfidf_lr.",
     )
     parser.add_argument(
         "--ngram_range",
@@ -84,11 +78,6 @@ def main() -> None:
             C=args.C,
             seed=args.seed,
         )
-
-    elif args.algo == "fasttext":
-        from amelia_experiment.fasttext_model import train_fasttext
-
-        result = train_fasttext(train_ds, val_ds, seed=args.seed)
 
     logger.info("Macro-F1 validation: %.4f", result["val_metrics"]["macro_f1"])
     logger.info("=== Training completato ===")

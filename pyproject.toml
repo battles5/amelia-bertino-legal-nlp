@@ -5,6 +5,9 @@ description = "Legal argument mining (premise vs conclusion) on Italian VAT deci
 requires-python = ">=3.10"
 license = {text = "MIT"}
 
+[tool.setuptools.packages.find]
+where = ["src"]
+
 [tool.ruff]
 target-version = "py312"
 line-length = 100
@@ -13,6 +16,9 @@ fix = true
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM"]
 ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"notebooks/*.ipynb" = ["E402", "B905"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["amelia_experiment"]
