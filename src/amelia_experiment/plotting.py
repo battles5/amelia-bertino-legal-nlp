@@ -52,9 +52,9 @@ def plot_confusion_matrix(
         yticks=np.arange(cm_array.shape[0]),
         xticklabels=labels,
         yticklabels=labels,
-        xlabel="Predetto",
-        ylabel="Reale",
-        title=f"Confusion Matrix — {model_name} ({split})",
+        xlabel="Predicted",
+        ylabel="True",
+        title=f"Confusion Matrix - {model_name} ({split})",
     )
 
     # Annota le celle
