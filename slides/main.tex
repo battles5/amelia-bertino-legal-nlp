@@ -52,11 +52,11 @@
 \footlinecolor{maincolor}
 \begin{frame}{Motivazione}
   \begin{itemize}
-    \item \textbf{Argument Mining}: estrarre e classificare automaticamente
-          componenti argomentative da testi~\cite{lippi2016argumentation}.
-    \item Applicazione al \textbf{dominio legale italiano}: supporto decisionale
-          per giuristi, automazione dell'analisi documentale.
-    \item \textbf{Sfide specifiche}: periodi lunghi, terminologia tecnica,
+    \item \textbf{argument mining}: estrarre e classificare automaticamente
+          componenti argomentative da testi~\cite{lippi2016argumentation};
+    \item applicazione al \textbf{dominio legale italiano}: supporto decisionale
+          per giuristi, automazione dell'analisi documentale;
+    \item \textbf{sfide specifiche}: periodi lunghi, terminologia tecnica,
           struttura argomentativa implicita, \textbf{lingua italiana}
           (risorse NLP limitate rispetto all'inglese).
   \end{itemize}
@@ -72,20 +72,20 @@
 % ── Slide 2: Collegamento con il Corso ───────────────────────────────────────
 \begin{frame}{Collegamento con il corso}
   \begin{itemize}
-    \item A lezione abbiamo seguito il percorso:
+    \item a lezione abbiamo seguito il percorso:
           preprocessing $\to$ BoW $\to$ \textbf{TF-IDF} $\to$ Word2Vec
-          $\to$ classificazione con \texttt{LogisticRegression} (es.\ LexGLUE).
-    \item \textbf{Questo progetto} applica la stessa pipeline a un dataset legale italiano
+          $\to$ classificazione con \texttt{LogisticRegression} (es.\ LexGLUE);
+    \item \textbf{questo progetto} applica la stessa pipeline a un dataset legale italiano
           e la confronta con un approccio neurale:
     \begin{enumerate}
-      \item \textbf{Baseline}: TF-IDF + LR (approccio visto in classe)
-      \item \textbf{Estensione}: fine-tuning di \textbf{BERTino}~\cite{bertino2020},
+      \item \textbf{baseline}: TF-IDF + LR (approccio visto in classe);
+      \item \textbf{estensione}: fine-tuning di \textbf{BERTino}~\cite{bertino2020},
             un DistilBERT~\cite{sanh2019distilbert} italiano
-            basato su BERT~\cite{devlin2019bert}
+            basato su BERT~\cite{devlin2019bert}.
     \end{enumerate}
-    \item \textbf{Obiettivo}: confronto quantitativo tra rappresentazioni
+    \item \textbf{obiettivo}: confronto quantitativo tra rappresentazioni
           \emph{bag-of-words} (senza contesto) e rappresentazioni
-          \emph{contestuali} (Transformer)
+          \emph{contestuali} (Transformer).
   \end{itemize}
 
   \vspace{0.2cm}
@@ -130,13 +130,13 @@
   \begin{columns}
     \begin{column}{0.55\textwidth}
       \begin{itemize}
-        \item \textbf{AMELIA}: Argument Mining Evaluation on Legal documents
-              in ItAlian~\cite{amelia2024}.
-        \item Decisioni della \textbf{Commissione Tributaria} (materia IVA).
+        \item \textbf{amelia}: Argument Mining Evaluation on Legal documents
+              in ItAlian~\cite{amelia2024};
+        \item decisioni della \textbf{Commissione Tributaria} (materia IVA);
         \item Task 1: classificazione binaria di ciascuna componente
-              argomentativa come \texttt{prem} (premessa) o \texttt{conc} (conclusione).
-        \item Split predefiniti dagli autori (no cross-validation necessaria).
-        \item Licenza: \textbf{CC BY 4.0}.
+              argomentativa come \texttt{prem} (premessa) o \texttt{conc} (conclusione);
+        \item split predefiniti dagli autori (no cross-validation necessaria);
+        \item licenza: \textbf{CC BY 4.0}.
       \end{itemize}
     \end{column}
     \begin{column}{0.4\textwidth}
@@ -241,10 +241,10 @@
           \item \texttt{conc}: termini \emph{performativi}
                 --- \emph{``appello''},
                 \emph{``fondato''}, \emph{``respinto''},
-                \emph{``pertanto''}
+                \emph{``pertanto};
           \item \texttt{prem}: dominato da \emph{parole funzionali}
                 generiche
-                (\emph{``di''}, \emph{``la''}, \emph{``in''})
+                (\emph{``di''}, \emph{``la''}, \emph{``in''}).
         \end{itemize}
       \end{block}
       {\small Le conclusioni hanno un \textbf{vocabolario specifico}
@@ -314,41 +314,41 @@
 \footlinecolor{sintefblu2}
 \begin{frame}{Setup sperimentale}
   \begin{itemize}
-    \item \textbf{Metrica}: Macro-F1 (motivata dall'EDA: sbilanciamento 7:1)
+    \item \textbf{metrica}: Macro-F1 (motivata dall'EDA: sbilanciamento 7:1);
           \begin{itemize}
             \item $\text{Macro-F1} = \frac{1}{|C|} \sum_{c \in C} F_1^{(c)}
-                   \;,\quad F_1 = \frac{2 P R}{P + R}$
-            \item Penalizza modelli che ignorano la classe minoritaria
+                   \;,\quad F_1 = \frac{2 P R}{P + R}$;
+            \item penalizza modelli che ignorano la classe minoritaria.
           \end{itemize}
-    \item \textbf{Split}: train (2\,108) / validation (609) / test (594) ---
-          predefiniti dal dataset, nessun data leakage
-    \item \textbf{Riproducibilit\`{a}}: seed = 42, codice versionato, CI automatica
-    \item \textbf{Modelli confrontati}:
+    \item \textbf{split}: train (2\,108) / validation (609) / test (594) ---
+          predefiniti dal dataset, nessun data leakage;
+    \item \textbf{riproducibilit\`{a}}: seed = 42, codice versionato, CI automatica;
+    \item \textbf{modelli confrontati}:;
     \begin{enumerate}
-      \item TF-IDF + Logistic Regression (\emph{approccio classico})
-      \item BERTino fine-tuned (\emph{Transformer encoder-only})
+      \item TF-IDF + Logistic Regression (\emph{approccio classico});
+      \item BERTino fine-tuned (\emph{Transformer encoder-only}).
     \end{enumerate}
-    \item \textbf{Framework}: scikit-learn~\cite{sklearn2011},
-          Hugging Face Transformers, PyTorch (CUDA)
+    \item \textbf{framework}: scikit-learn~\cite{sklearn2011},
+          Hugging Face Transformers, PyTorch (CUDA).
   \end{itemize}
 \end{frame}
 
 % ── Slide 12: Baseline ──────────────────────────────────────────────────────
 \begin{frame}{Baseline: TF-IDF + Logistic Regression}
   \begin{itemize}
-    \item Pipeline identica a quella vista a lezione (cfr.\ LexGLUE)~\cite{sklearn2011}:
+    \item pipeline identica a quella vista a lezione (cfr.\ LexGLUE)~\cite{sklearn2011}:;
     \begin{enumerate}
-      \item \textbf{Preprocessing}: solo normalizzazione whitespace.
+      \item \textbf{preprocessing}: solo normalizzazione whitespace.
             \emph{No stemming}: i testi legali italiani perdono informazione
-            con stem aggressivi (es.\ ``fondato'' $\to$ ``fond'').
+            con stem aggressivi (es.\ ``fondato'' $\to$ ``fond'');
       \item \textbf{TfidfVectorizer}: unigrammi+bigrammi,
             \texttt{sublinear\_tf=True}, \texttt{min\_df=2},
-            \texttt{max\_features=50\,000}.
+            \texttt{max\_features=50\,000};
       \item \textbf{LogisticRegression}: solver LBFGS,
             \texttt{C=1.0}, \texttt{max\_iter=1000}.
     \end{enumerate}
-    \item Tempo di addestramento: $< 1$ minuto su CPU.
-    \item \textbf{Razionale}: rappresenta il \emph{ceiling} di un approccio
+    \item tempo di addestramento: $< 1$ minuto su CPU;
+    \item \textbf{razionale}: rappresenta il \emph{ceiling} di un approccio
           BoW + classificatore lineare su questo task.
   \end{itemize}
 
@@ -362,16 +362,16 @@
   \begin{columns}
     \begin{column}{0.55\textwidth}
       \begin{itemize}
-        \item \textbf{BERTino} (\texttt{indigo-ai/BERTino})~\cite{bertino2020}:
-              DistilBERT pre-addestrato su corpora italiani.
-        \item Architettura BERT~\cite{devlin2019bert} distillata:
-              \textbf{6 layer}, 768 hidden, 66M parametri.
-        \item Fine-tuning end-to-end con \texttt{Trainer} API:
+        \item \textbf{bertino} (\texttt{indigo-ai/BERTino})~\cite{bertino2020}:
+              DistilBERT pre-addestrato su corpora italiani;
+        \item architettura BERT~\cite{devlin2019bert} distillata:
+              \textbf{6 layer}, 768 hidden, 66M parametri;
+        \item fine-tuning end-to-end con \texttt{Trainer} API:
         \begin{itemize}
-          \item Selezione best checkpoint via Macro-F1 su validation
-          \item Warmup lineare + weight decay
+          \item selezione best checkpoint via Macro-F1 su validation;
+          \item warmup lineare + weight decay.
         \end{itemize}
-        \item Batch inference (\texttt{batch\_size=32}).
+        \item batch inference (\texttt{batch\_size=32}).
       \end{itemize}
     \end{column}
     \begin{column}{0.4\textwidth}
@@ -453,13 +453,13 @@
 
   \vspace{0.3cm}
   \begin{itemize}
-    \item \textbf{Baseline}: precision$_\text{conc}$ = 1.0 ma recall$_\text{conc}$ = 0.372.
+    \item \textbf{baseline}: precision$_\text{conc}$ = 1.0 ma recall$_\text{conc}$ = 0.372.
           Quando predice \texttt{conc} ha sempre ragione, ma
-          \textbf{perde il 63\% delle conclusioni} (le classifica come premesse).
+          \textbf{perde il 63\% delle conclusioni} (le classifica come premesse);
     \item \textbf{BERTino}: F1$_\text{conc}$ = 0.865 vs 0.542
           (\textbf{+32.3 pp}). Il guadagno complessivo di Macro-F1 viene
-          quasi interamente da qui.
-    \item La classe \texttt{prem} \`{e} gi\`{a} facile per entrambi (F1 $>$ 0.95).
+          quasi interamente da qui;
+    \item la classe \texttt{prem} \`{e} gi\`{a} facile per entrambi (F1 $>$ 0.95).
   \end{itemize}
 \end{frame}
 
@@ -689,16 +689,16 @@
 
   \vspace{0.15cm}
   \begin{enumerate}
-    \item L'EDA mostra che l'overlap lessicale \`{e} del 7.3\%:
-          premesse e conclusioni \emph{condividono quasi tutto il vocabolario}.
+    \item l'EDA mostra che l'overlap lessicale \`{e} del 7.3\%:
+          premesse e conclusioni \emph{condividono quasi tutto il vocabolario};
     \item TF-IDF, basato su frequenze di termini, cattura solo i segnali
           lessicali forti (``pertanto'', ``appello''), ma non riesce a distinguere
-          quando le stesse parole hanno \emph{ruolo argomentativo diverso}.
-    \item Di conseguenza, la baseline ``gioca sul sicuro'':
-          recall$_\text{prem}$ = 100\%, recall$_\text{conc}$ = 37\%.
+          quando le stesse parole hanno \emph{ruolo argomentativo diverso};
+    \item di conseguenza, la baseline ``gioca sul sicuro'':
+          recall$_\text{prem}$ = 100\%, recall$_\text{conc}$ = 37\%;
     \item BERTino, grazie alla self-attention bidirezionale, modella
-          l'\textbf{ordine delle parole} e le \textbf{dipendenze sintattiche}.
-    \item Risultato: recall$_\text{conc}$ dal 37\% all'86\%, con un costo
+          l'\textbf{ordine delle parole} e le \textbf{dipendenze sintattiche};
+    \item risultato: recall$_\text{conc}$ dal 37\% all'86\%, con un costo
           minimo su \texttt{prem} (recall 100\% $\to$ 98\%).
   \end{enumerate}
 
@@ -716,14 +716,14 @@
 
   \vspace{0.2cm}
   \begin{itemize}
-    \item \textbf{Testi corti} ($\mu$ = 25.9 parole):
-          meno contesto disponibile per la self-attention.
+    \item \textbf{testi corti} ($\mu$ = 25.9 parole):
+          meno contesto disponibile per la self-attention;
     \item \textbf{FN ad alta confidenza} (0.907):
           conclusioni che \emph{non contengono indicatori} formulaici
-          tipici (es.\ manca ``pertanto'', ``per questi motivi'').
+          tipici (es.\ manca ``pertanto'', ``per questi motivi'');
     \item \textbf{FP}: premesse che usano linguaggio dispositivo
           (``va rigettato'', ``deve essere accolto'' --- il giudice
-          riporta la posizione di una parte).
+          riporta la posizione di una parte);
     \item BERTino corregge \textbf{38/49} errori della baseline,
           ma ne introduce 10 nuovi: casi in cui la pragmatica
           prevale sulla sintassi.
@@ -746,18 +746,18 @@
 \begin{frame}{Risultati chiave}
   \begin{enumerate}
     \item \textbf{BERTino supera nettamente la baseline}:
-          Macro-F1 = 0.922 vs 0.748 (\textbf{+17.4 pp}) sul test set.
-    \item Il guadagno principale \`{e} sulla \textbf{classe minoritaria}:
+          Macro-F1 = 0.922 vs 0.748 (\textbf{+17.4 pp}) sul test set;
+    \item il guadagno principale \`{e} sulla \textbf{classe minoritaria}:
           F1$_\text{conc}$ = 0.865 vs 0.542 (+32.3 pp).
-          Recall dal 37\% all'86\%.
-    \item L'\textbf{accuracy inganna}: la baseline sembra buona (91.75\%)
-          ma Macro-F1 rivela che ignora la maggioranza delle conclusioni.
+          Recall dal 37\% all'86\%;
+    \item l'\textbf{accuracy inganna}: la baseline sembra buona (91.75\%)
+          ma Macro-F1 rivela che ignora la maggioranza delle conclusioni;
     \item BERTino \textbf{generalizza bene}: prestazioni stabili tra
           validation (0.907) e test (0.922), a differenza della baseline
-          (0.598 $\to$ 0.748).
-    \item L'ablation study mostra che il gap \`{e} \textbf{strutturale}:
-          nessuna configurazione TF-IDF+LR pu\`{o} colmarlo.
-    \item I 21 errori residui sono su \textbf{testi corti e ambigui},
+          (0.598 $\to$ 0.748);
+    \item l'ablation study mostra che il gap \`{e} \textbf{strutturale}:
+          nessuna configurazione TF-IDF+LR pu\`o colmarlo;
+    \item i 21 errori residui sono su \textbf{testi corti e ambigui},
           non su fallimenti sistematici del modello.
   \end{enumerate}
 \end{frame}
@@ -765,21 +765,21 @@
 % ── Slide 25: Limiti ─────────────────────────────────────────────────────────
 \begin{frame}{Limiti dello studio}
   \begin{itemize}
-    \item \textbf{Dataset piccolo}: $\sim$3.3k campioni $\to$ varianza alta,
+    \item \textbf{dataset piccolo}: $\sim$3.3k campioni $\to$ varianza alta,
           specialmente sulla classe \texttt{conc} (solo 78 nel test set).
-          Un intervallo di confidenza su Macro-F1 sarebbe informativo.
-    \item \textbf{Solo Task 1} di AMELIA:
+          Un intervallo di confidenza su Macro-F1 sarebbe informativo;
+    \item \textbf{solo Task 1} di AMELIA:
           non abbiamo esplorato le relazioni tra componenti
           (Task 2: relation extraction) n\'{e} la struttura globale
-          dell'argomentazione (Task 3).
-    \item \textbf{Un solo Transformer}: BERTino \`{e} l'unico modello neurale
+          dell'argomentazione (Task 3);
+    \item \textbf{un solo Transformer}: BERTino \`{e} l'unico modello neurale
           testato.
           Il confronto con UmBERTo, AlBERTo o modelli multilingue
           direbbe se il guadagno dipende dal modello o dalla classe
-          di approcci.
-    \item \textbf{Nessuna cross-validation}: usiamo split fissi.
-          Con 3.3k campioni, $k$-fold aggiungerebbe robustezza.
-    \item \textbf{No hyperparameter search} per BERTino: learning rate,
+          di approcci;
+    \item \textbf{nessuna cross-validation}: usiamo split fissi.
+          Con 3.3k campioni, $k$-fold aggiungerebbe robustezza;
+    \item \textbf{no hyperparameter search} per BERTino: learning rate,
           epoche e batch size usati con valori standard.
   \end{itemize}
 \end{frame}
@@ -787,18 +787,18 @@
 % ── Slide 26: Lavori futuri ──────────────────────────────────────────────────
 \begin{frame}{Possibili estensioni}
   \begin{itemize}
-    \item \textbf{Confronto modelli}: UmBERTo, AlBERTo, LEGAL-BERT-IT,
-          XLM-RoBERTa --- per isolare il contributo del pre-training italiano.
+    \item \textbf{confronto modelli}: UmBERTo, AlBERTo, LEGAL-BERT-IT,
+          XLM-RoBERTa --- per isolare il contributo del pre-training italiano;
     \item \textbf{PEFT / LoRA} (cfr.\ lezione su LLM): ridurre i parametri
-          aggiornabili mantenendo le prestazioni.
-    \item \textbf{Data augmentation}: back-translation, parafrasizzazione
-          con LLM per bilanciare la classe \texttt{conc}.
-    \item \textbf{Multi-task}: estendere a Task 2--3 di AMELIA
-          (relation extraction, struttura argomentativa).
-    \item \textbf{Threshold tuning}: calibrare la soglia di classificazione
+          aggiornabili mantenendo le prestazioni;
+    \item \textbf{data augmentation}: back-translation, parafrasizzazione
+          con LLM per bilanciare la classe \texttt{conc};
+    \item \textbf{multi-task}: estendere a Task 2--3 di AMELIA
+          (relation extraction, struttura argomentativa);
+    \item \textbf{threshold tuning}: calibrare la soglia di classificazione
           per bilanciare precision/recall su \texttt{conc}
-          (attualmente 0.870/0.859).
-    \item \textbf{Informazioni strutturali}: posizione della componente
+          (attualmente 0.870/0.859);
+    \item \textbf{informazioni strutturali}: posizione della componente
           nel documento, lunghezza relativa, componenti adiacenti.
   \end{itemize}
 \end{frame}
@@ -816,20 +816,20 @@
     \begin{column}{0.48\textwidth}
       \begin{block}{Struttura progetto}
         \begin{itemize}
-          \item Pacchetto pip-installable (\texttt{pyproject.toml})
-          \item \textbf{39 test unitari} (pytest)
-          \item CI/CD: GitHub Actions (ruff + pytest)
-          \item Ruff: linting + formatting (100\% clean)
+          \item pacchetto pip-installable (\texttt{pyproject.toml});
+          \item \textbf{39 test unitari} (pytest);
+          \item CI/CD: GitHub Actions (ruff + pytest);
+          \item Ruff: linting + formatting (100\% clean).
         \end{itemize}
       \end{block}
     \end{column}
     \begin{column}{0.48\textwidth}
       \begin{block}{Artefatti prodotti}
         \begin{itemize}
-          \item 2 notebook (EDA + Error Analysis)
-          \item 14 grafici pubblicabili (300 DPI)
-          \item Metriche in JSON + CSV + \LaTeX
-          \item README completo in inglese
+          \item 2 notebook (EDA + Error Analysis);
+          \item 14 grafici pubblicabili (300 DPI);
+          \item metriche in JSON + CSV + \LaTeX;
+          \item README completo in inglese.
         \end{itemize}
       \end{block}
     \end{column}
