@@ -70,7 +70,7 @@
 \end{frame}
 
 % ── Slide 2: Collegamento con il Corso ───────────────────────────────────────
-\begin{frame}{Collegamento con il Corso}
+\begin{frame}{Collegamento con il corso}
   \begin{itemize}
     \item A lezione abbiamo seguito il percorso:
           preprocessing $\to$ BoW $\to$ \textbf{TF-IDF} $\to$ Word2Vec
@@ -94,7 +94,7 @@
 \end{frame}
 
 % ── Slide 3: Da BoW a Transformer ───────────────────────────────────────────
-\begin{frame}{Da Bag-of-Words a Transformer --- Evoluzione degli Approcci}
+\begin{frame}{Da Bag-of-Words a Transformer --- Evoluzione degli approcci}
   \centering
   \begin{tabular}{lccc}
     \toprule
@@ -169,7 +169,7 @@
 \section{Exploratory Data Analysis}
 
 % ── Slide 5: Distribuzione classi ────────────────────────────────────────────
-\begin{frame}{EDA --- Distribuzione delle Classi}
+\begin{frame}{EDA --- Distribuzione delle classi}
   \centering
   \includegraphics[width=0.82\textwidth]{../results/plots/class_distribution.png}
 
@@ -184,7 +184,7 @@
 \end{frame}
 
 % ── Slide 6: Lunghezza testi ─────────────────────────────────────────────────
-\begin{frame}{EDA --- Distribuzione della Lunghezza dei Testi}
+\begin{frame}{EDA --- Distribuzione della lunghezza dei testi}
   \begin{columns}
     \begin{column}{0.58\textwidth}
       \centering
@@ -215,7 +215,7 @@
 \end{frame}
 
 % ── Slide 7: Tokenizzazione WordPiece ────────────────────────────────────────
-\begin{frame}{EDA --- Analisi della Tokenizzazione WordPiece}
+\begin{frame}{EDA --- Analisi della tokenizzazione WordPiece}
   \centering
   \includegraphics[width=0.82\textwidth]{../results/plots/token_length_distribution.png}
 
@@ -229,7 +229,7 @@
 \end{frame}
 
 % ── Slide 8: TF-IDF ─────────────────────────────────────────────────────────
-\begin{frame}{EDA --- Termini Discriminanti (Top-20 TF-IDF)}
+\begin{frame}{EDA --- Termini discriminanti (Top-20 TF-IDF)}
   \begin{columns}
     \begin{column}{0.55\textwidth}
       \centering
@@ -277,7 +277,7 @@
 \end{frame}
 
 % ── Slide 10: Dall'EDA alla Metodologia ──────────────────────────────────────
-\begin{frame}{Dall'EDA alla Metodologia}
+\begin{frame}{Dall'EDA alla metodologia}
   L'analisi esplorativa ci ha fornito indicazioni concrete per
   le scelte sperimentali:
 
@@ -312,7 +312,7 @@
 
 % ── Slide 11: Setup Sperimentale ─────────────────────────────────────────────
 \footlinecolor{sintefblu2}
-\begin{frame}{Setup Sperimentale}
+\begin{frame}{Setup sperimentale}
   \begin{itemize}
     \item \textbf{Metrica}: Macro-F1 (motivata dall'EDA: sbilanciamento 7:1)
           \begin{itemize}
@@ -358,7 +358,7 @@
 \end{frame}
 
 % ── Slide 13: BERTino ───────────────────────────────────────────────────────
-\begin{frame}{BERTino: Architettura e Fine-Tuning}
+\begin{frame}{BERTino: Architettura e fine-tuning}
   \begin{columns}
     \begin{column}{0.55\textwidth}
       \begin{itemize}
@@ -405,7 +405,7 @@
 
 % ── Slide 14: Risultati Principali ───────────────────────────────────────────
 \footlinecolor{maincolor}
-\begin{frame}{Risultati Principali}
+\begin{frame}{Risultati principali}
   \centering
   \begin{tabular}{lccc}
     \toprule
@@ -432,7 +432,7 @@
 \end{frame}
 
 % ── Slide 15: Analisi per classe ─────────────────────────────────────────────
-\begin{frame}{Analisi Per-Classe --- Dove Si Gioca la Partita}
+\begin{frame}{Analisi per-classe --- Dove si gioca la partita}
   \centering
   {\small
   \begin{tabular}{ll cccc}
@@ -464,7 +464,7 @@
 \end{frame}
 
 % ── Slide 16: Perché l'accuracy inganna ──────────────────────────────────────
-\begin{frame}{Perch\'{e} l'Accuracy Inganna}
+\begin{frame}{Perch\'e l'accuracy inganna}
   \begin{columns}
     \begin{column}{0.48\textwidth}
       \centering
@@ -506,7 +506,7 @@
 \end{frame}
 
 % ── Slide 17: Confusion Matrix ──────────────────────────────────────────────
-\begin{frame}{Confusion Matrix --- Test Set}
+\begin{frame}{Confusion Matrix --- Test set}
   \begin{columns}
     \begin{column}{0.5\textwidth}
       \centering
@@ -576,7 +576,7 @@
 \section{Analisi degli Errori}
 
 % ── Slide 19: Errori di BERTino ──────────────────────────────────────────────
-\begin{frame}{Analisi degli Errori di BERTino --- 21 Errori su 594}
+\begin{frame}{Analisi degli errori di BERTino --- 21 errori su 594}
   \begin{columns}
     \begin{column}{0.48\textwidth}
       \begin{block}{Tipologia degli errori}
@@ -607,7 +607,7 @@
 \end{frame}
 
 % ── Slide 20: Lunghezza errori e confronto baseline ──────────────────────────
-\begin{frame}{Pattern degli Errori: Lunghezza e Confronto con Baseline}
+\begin{frame}{Pattern degli errori: Lunghezza e confronto con baseline}
   \begin{columns}
     \begin{column}{0.5\textwidth}
       \centering
@@ -641,7 +641,7 @@
 \section{Ablation Study}
 
 % ── Slide 21: Ablation baseline ──────────────────────────────────────────────
-\begin{frame}{Ablation Study --- Si Pu\`{o} Migliorare la Baseline?}
+\begin{frame}{Ablation Study --- Si pu\`o migliorare la baseline?}
   \begin{columns}
     \begin{column}{0.55\textwidth}
       \centering
@@ -684,7 +684,7 @@
 \section{Discussione}
 
 % ── Slide 22: Perché BERTino vince ───────────────────────────────────────────
-\begin{frame}{Perch\'{e} BERTino Vince --- Sintesi Ragionata}
+\begin{frame}{Perch\'e BERTino vince --- Sintesi ragionata}
   \textbf{Ricostruiamo il ragionamento dall'EDA ai risultati:}
 
   \vspace{0.15cm}
@@ -710,7 +710,7 @@
 \end{frame}
 
 % ── Slide 23: Errori residui ─────────────────────────────────────────────────
-\begin{frame}{Errori Residui --- Cosa Ci Dicono?}
+\begin{frame}{Errori residui --- Cosa ci dicono?}
   I 21 errori di BERTino non sono casuali ma rivelano i
   \textbf{limiti intrinseci} del task:
 
@@ -743,7 +743,7 @@
 
 % ── Slide 24: Risultati chiave ───────────────────────────────────────────────
 \footlinecolor{sintefred}
-\begin{frame}{Risultati Chiave}
+\begin{frame}{Risultati chiave}
   \begin{enumerate}
     \item \textbf{BERTino supera nettamente la baseline}:
           Macro-F1 = 0.922 vs 0.748 (\textbf{+17.4 pp}) sul test set.
@@ -763,7 +763,7 @@
 \end{frame}
 
 % ── Slide 25: Limiti ─────────────────────────────────────────────────────────
-\begin{frame}{Limiti dello Studio}
+\begin{frame}{Limiti dello studio}
   \begin{itemize}
     \item \textbf{Dataset piccolo}: $\sim$3.3k campioni $\to$ varianza alta,
           specialmente sulla classe \texttt{conc} (solo 78 nel test set).
@@ -785,7 +785,7 @@
 \end{frame}
 
 % ── Slide 26: Lavori futuri ──────────────────────────────────────────────────
-\begin{frame}{Possibili Estensioni}
+\begin{frame}{Possibili estensioni}
   \begin{itemize}
     \item \textbf{Confronto modelli}: UmBERTo, AlBERTo, LEGAL-BERT-IT,
           XLM-RoBERTa --- per isolare il contributo del pre-training italiano.
@@ -811,7 +811,7 @@
 
 % ── Slide 27: Engineering ────────────────────────────────────────────────────
 \footlinecolor{}
-\begin{frame}{Engineering \& Qualit\`{a} del Codice}
+\begin{frame}{Engineering \& Qualit\`a del codice}
   \begin{columns}
     \begin{column}{0.48\textwidth}
       \begin{block}{Struttura progetto}
