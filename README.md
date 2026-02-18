@@ -154,7 +154,6 @@ amelia-bertino-legal-nlp/
 │   ├── plots/                  # 14 publication-ready plots
 │   └── tables/                 # LaTeX results table
 ├── tests/                      # Unit tests (pytest, 39 tests)
-├── .github/workflows/ci.yml    # CI via GitHub Actions
 ├── requirements.txt
 ├── pyproject.toml
 └── README.md
@@ -167,7 +166,7 @@ amelia-bertino-legal-nlp/
 - **Fixed seed:** 42 (Python, NumPy, PyTorch)
 - **Official splits:** AMELIA uses predefined splits on Hugging Face
 - **Versionable artifacts:** JSON/CSV metrics and confusion matrices in `results/`
-- **CI:** ruff (lint + format) + pytest on every push via GitHub Actions
+- **QA:** ruff (lint + format) + pytest (39 tests)
 
 ---
 
